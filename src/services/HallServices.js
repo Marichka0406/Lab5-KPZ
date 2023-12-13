@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:7163/api/Hall';
+const API_URL = 'https://localhost:7163/api/Hall';
 
 export const getAllHalls = async () => {
     try {
@@ -22,7 +22,7 @@ export const getHallById = async (id) => {
     }
 };
 
-export const createHall = async (hallName, seatsQuantity) => {
+export const addHall = async (hallName, seatsQuantity) => {
     const data = {
         "hallName": hallName,
         "seatsQuantity": seatsQuantity

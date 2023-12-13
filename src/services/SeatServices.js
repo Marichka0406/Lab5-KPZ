@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:7163/api/Seat';
+const API_URL = 'https://localhost:7163/api/Seat';
 
 export const getAllSeats = async () => {
     try {
@@ -22,7 +22,7 @@ export const getSeatById = async (id) => {
     }
 };
 
-export const createSeat = async (seatName, hallId) => {
+export const addSeat = async (seatName, hallId) => {
     const data = {
         "seatName": seatName,
         "hallId": hallId

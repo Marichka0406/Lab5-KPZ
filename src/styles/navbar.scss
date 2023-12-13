@@ -1,0 +1,21 @@
+@import "variables";
+
+.navbar-wrapper {
+  margin-bottom:"50px";
+  background-color: $navbarBackgroundColor;
+  @include flexCenter;
+}
+
+.navbar-elements {
+    @include flexCenter;
+}
+
+.navbar-element {
+  & a {
+    color: $navbarTextColor; 
+    text-decoration: none;
+    &:hover {
+      color: $navbarHoverTextColor;     
+    }
+  }
+}

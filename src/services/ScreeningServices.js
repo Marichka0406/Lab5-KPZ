@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:7163/api/Screening';
+const API_URL = 'https://localhost:7163/api/Screening';
 
 export const getAllScreenings = async () => {
     try {
@@ -22,7 +22,7 @@ export const getScreeningById = async (id) => {
     }
 };
 
-export const createScreening = async (price, screeningDate, movieId, hallId) => {
+export const addScreening = async (price, screeningDate, movieId, hallId) => {
     const data = {
         "price": price,
         "screeningDate": screeningDate,

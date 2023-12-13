@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:7163/api/Movie';
+const API_URL = 'https://localhost:7163/api/Movie';
 
 export const getAllMovies = async () => {
     try {
@@ -47,7 +47,7 @@ export const deleteMovie = async (id) => {
 };
 
 
-export const addMovie = async (title, description, duration, actors, genres, directors, movieLanguage ) => {
+export const addMovie = async (title, description, duration, actors, genres, directors, movieLanguage) => {
     const data = {
         "title": title,
         "description": description,

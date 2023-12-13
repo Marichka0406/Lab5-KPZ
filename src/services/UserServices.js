@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:7163/api/User';
+const API_URL = 'https://localhost:7163/api/User';
 
 export const getAllUsers = async () => {
     try {
@@ -22,10 +22,10 @@ export const getUserById = async (id) => {
     }
 };
 
-export const createUser = async (userName, emailAddress, phoneNumber, password, userRole) => {
+export const addUser = async (userName, emailAdress, phoneNumber, password, userRole) => {
     const data = {
         "userName": userName,
-        "emailAddress": emailAddress,
+        "emailAddress": emailAdress,
         "phoneNumber": phoneNumber,
         "password": password,
         "userRole": userRole
