@@ -26,7 +26,7 @@ import {
   editSeat,
   deleteSeat,
   addSeat,
-} from "../../services/SeatServices.js";
+} from "../../services/SeatService.js";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { styles } from "../../styles/table.styles.js"

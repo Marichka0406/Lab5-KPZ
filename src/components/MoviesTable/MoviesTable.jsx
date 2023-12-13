@@ -27,7 +27,7 @@ import {
   editMovie,
   deleteMovie,
   addMovie,
-} from "../../services/MovieServices.js";
+} from "../../services/MovieService.js";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

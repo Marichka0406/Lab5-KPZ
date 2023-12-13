@@ -26,7 +26,7 @@ import {
   editScreening,
   deleteScreening,
   addScreening,
-} from "../../services/ScreeningServices.js";
+} from "../../services/ScreeningService.js";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { styles } from "../../styles/table.styles.js"

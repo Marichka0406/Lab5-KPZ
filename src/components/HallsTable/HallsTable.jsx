@@ -26,7 +26,7 @@ import {
   editHall,
   deleteHall,
   addHall,
-} from "../../services/HallServices.js";
+} from "../../services/HallService.js";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

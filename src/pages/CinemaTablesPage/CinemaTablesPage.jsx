@@ -1,8 +1,8 @@
 import { Outlet, Link } from "react-router-dom";
 import { AppBar, Toolbar, List, ListItem } from "@mui/material";
-import { styles } from "../MainPage/MainPage.styles" 
+import { styles } from "./CinemaTablesPage.styles" 
 
-const MainPage = () => {
+const CinemaTablesPage = () => {
   return (
     <>
       <AppBar>
@@ -36,4 +36,4 @@ const MainPage = () => {
     </>
   );
 };
-export default MainPage;
+export default CinemaTablesPage;

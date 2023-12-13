@@ -26,7 +26,7 @@ import {
   editTicket,
   deleteTicket,
   addTicket,
-} from "../../services/TicketServices.js";
+} from "../../services/TicketService.js";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { styles } from "../../styles/table.styles.js"

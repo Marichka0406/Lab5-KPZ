@@ -30,7 +30,7 @@ import {
   editUser,
   deleteUser,
   addUser,
-} from "../../services/UserServices.js";
+} from "../../services/UserService.js";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { styles } from "../../styles/table.styles.js"
