@@ -10,8 +10,21 @@ const LoginPage = ({ onLogin }) => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
+  // Масив логінів і паролів, які можуть підійти
+  const validLogins = [
+    { username: "Maria0406", password: "0406" },
+    { username: "JohnDoe", password: "12345" },
+    { username: "AliceSmith", password: "pass123" },
+    { username: "BobJohnson", password: "qwerty" },
+    // Додайте інші об'єкти логінів, які можуть підійти
+  ];
+
   const handleLogin = () => {
-    if (username === "Maria0406" && password === "0406") {
+    const isValidLogin = validLogins.some(
+      (login) => login.username === username && login.password === password
+    );
+
+    if (isValidLogin) {
       onLogin(true);
       navigate("/");
     } else {
