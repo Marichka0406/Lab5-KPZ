@@ -1,12 +1,12 @@
 import { BrowserRouter, Routes, Route  } from 'react-router-dom';
-import MainPage from './components/MainPage'
-import WelcomeBlock from './components/WelcomeBlock'
-import MoviesTable from './components/MoviesTable'
-import ScreeningsTable from './components/ScreeningsTable'
-import TicketsTable from './components/TicketsTable'
-import HallsTable from './components/HallsTable'
-import SeatsTable from './components/SeatsTable'
-import UsersTable from './components/UsersTable'
+import MainPage from './pages/MainPage/MainPage'
+import WelcomeBlock from './components/WelcomeBlock/WelcomeBlock'
+import MoviesTable from './components/MoviesTable/MoviesTable'
+import ScreeningsTable from './components/ScreeningsTable/ScreeningsTable'
+import TicketsTable from './components/TicketsTable/TicketsTable'
+import HallsTable from './components/HallsTable/HallsTable'
+import SeatsTable from './components/SeatsTable/SeatsTable'
+import UsersTable from './components/UsersTable/UsersTable'
 
 const App = () => {
   return (   

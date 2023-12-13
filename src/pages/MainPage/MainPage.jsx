@@ -1,32 +1,32 @@
 import { Outlet, Link } from "react-router-dom";
 import { AppBar, Toolbar, List, ListItem } from "@mui/material";
-import "../styles/styles.scss";
+import { styles } from "../MainPage/MainPage.styles" 
 
 const MainPage = () => {
   return (
     <>
       <AppBar>
-        <Toolbar className="navbar-wrapper">
-          <List className="navbar-elements">
-            <ListItem className="navbar-element">
+        <Toolbar sx={styles.navbarWrapper}>
+          <List sx={styles.navbarElements}>
+            <ListItem sx={styles.navbarElement}>
               <Link to="/">Home</Link>
             </ListItem>
-            <ListItem className="navbar-element">
+            <ListItem sx={styles.navbarElement}>
               <Link to="/movies">Movies</Link>
             </ListItem>
-            <ListItem className="navbar-element">
+            <ListItem sx={styles.navbarElement}>
               <Link to="/screenings">Screenings</Link>
             </ListItem>
-            <ListItem className="navbar-element">
+            <ListItem sx={styles.navbarElement}>
               <Link to="/halls">Halls</Link>
             </ListItem>
-            <ListItem className="navbar-element">
+            <ListItem sx={styles.navbarElement}>
               <Link to="/seats">Seats</Link>
             </ListItem>
-            <ListItem className="navbar-element">
+            <ListItem sx={styles.navbarElement}>
               <Link to="/tickets">Tickets</Link>
             </ListItem>
-            <ListItem className="navbar-element">
+            <ListItem sx={styles.navbarElement}>
               <Link to="/users">Users</Link>
             </ListItem>
           </List>

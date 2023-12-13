@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -21,23 +21,24 @@ import CloseIcon from "@mui/icons-material/Close";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteOutlineIcon from "@mui/icons-material/Delete";
 import {
-  getAllScreenings,
-  getScreeningById,
-  editScreening,
-  deleteScreening,
-  addScreening,
-} from "../services/ScreeningServices.js";
+  getAllTickets,
+  getTicketById,
+  editTicket,
+  deleteTicket,
+  addTicket,
+} from "../../services/TicketServices.js";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { styles } from "../../styles/table.styles.js"
 
-const Screenings = () => {
+const TicketsTable = () => {
   const [show, setShow] = useState(false);
   const [data, setData] = useState([]);
+  const [ticketId, setTicketId] = useState("");
+  const [purchaseDate, setPurchaseDate] = useState("");
+  const [seatId, setSeatId] = useState("");
   const [screeningId, setScreeningId] = useState("");
-  const [price, setPrice] = useState("");
-  const [screeningDate, setScreeningDate] = useState("");
-  const [movieId, setMovieId] = useState("");
-  const [hallId, setHallId] = useState("");
+  const [userId, setUserId] = useState("");
   const [isEditing, setIsEditing] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -54,7 +55,7 @@ const Screenings = () => {
   };
 
   const getData = () => {
-    getAllScreenings()
+    getAllTickets()
       .then((data) => {
         setData(data);
         console.log(data);
@@ -64,16 +65,16 @@ const Screenings = () => {
       });
   };
 
-  const handleEdit = (screeningId) => {
+  const handleEdit = (ticketId) => {
     setIsEditing(true);
     handleShow();
-    getScreeningById(screeningId)
+    getTicketById(ticketId)
       .then((result) => {
-        setScreeningId(screeningId);
-        setPrice(result.price);
-        setScreeningDate(result.screeningDate);
-        setMovieId(result.movieId);
-        setHallId(result.hallId);
+        setTicketId(ticketId);
+        setPurchaseDate(result.purchaseDate);
+        setSeatId(result.seatId);
+        setScreeningId(result.screeningId);
+        setUserId(result.userId);
       })
       .catch((error) => {
         console.log(error);
@@ -81,31 +82,31 @@ const Screenings = () => {
   };
 
   const handleUpdate = () => {
-    const screeningData = {
+    const ticketData = {
+      ticketId: ticketId,
+      purchaseDate: purchaseDate,
+      seatId: seatId,
       screeningId: screeningId,
-      price: price,
-      screeningDate: screeningDate,
-      movieId: movieId,
-      hallId: hallId,
+      userId: userId,
     };
 
-    editScreening(screeningId, screeningData)
+    editTicket(ticketId, ticketData)
       .then(() => {
         getData();
         clear();
-        toast.success("Screening was successfully updated");
+        toast.success("Ticket was successfully updated");
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
-  const handleDelete = (screeningId) => {
-    if (window.confirm("Are you sure you want to delete selected Screening?")) {
-      deleteScreening(screeningId)
+  const handleDelete = (ticketId) => {
+    if (window.confirm("Are you sure you want to delete selected Ticket?")) {
+      deleteTicket(ticketId)
         .then((result) => {
           if (result === true) {
-            toast.success("Screening was successfully deleted");
+            toast.success("Ticket was successfully deleted");
           }
           getData();
         })
@@ -122,20 +123,20 @@ const Screenings = () => {
   };
 
   const handleCreate = async () => {
-    const added = await addScreening(
-      price,
-      screeningDate,
-      movieId,
-      hallId
+    const added = await addTicket(
+      purchaseDate,
+      seatId,
+      screeningId,
+      userId
     );
 
     if (added) {
       handleClose();
       getData();
       clear();
-      toast.success("New screening is added");
+      toast.success("New ticket was added");
     } else {
-      console.error("Failed to add screening");
+      console.error("Failed to add ticket");
     }
     clear();
   };
@@ -150,11 +151,11 @@ const Screenings = () => {
   };
 
   const clear = () => {
+    setTicketId("");
+    setPurchaseDate("");
+    setSeatId("");
     setScreeningId("");
-    setPrice("");
-    setScreeningDate("");
-    setMovieId("");
-    setHallId("");
+    setUserId("");
   };
 
   return (
@@ -162,46 +163,37 @@ const Screenings = () => {
       <ToastContainer />
       <TableContainer component={Paper}>
         <Button
-          sx={{
-            marginTop: "100px",
-            marginLeft: "10px",
-            width: "150px", // Зміна ширини кнопки
-            backgroundColor: "#B00020", // Колір кнопки
-            color: "white", // Колір тексту кнопки
-            "&:hover": {
-              backgroundColor: "#7f0019", // Колір при наведенні
-            },
-          }}
+          sx={styles.addButton}
           variant="contained"
           onClick={handleAdd}
         >
-          Add Screening
+          Add Ticket
         </Button>
-        <Table sx={{ minWidth: 650 }} aria-label="screening table">
+        <Table sx={{ minWidth: 650 }} aria-label="ticket table">
           <TableHead>
             <TableRow>
               <TableCell align="center">ID</TableCell>
-              <TableCell align="center">Price</TableCell>
-              <TableCell align="center">Screening Date</TableCell>
-              <TableCell align="center">Movie ID</TableCell>
-              <TableCell align="center">Hall ID</TableCell>
+              <TableCell align="center">Purchase Date</TableCell>
+              <TableCell align="center">Seat ID</TableCell>
+              <TableCell align="center">Screening ID</TableCell>
+              <TableCell align="center">User ID</TableCell>
               <TableCell align="center">Action</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {data.map((item, index) => (
               <TableRow key={index}>
+                <TableCell align="center">{item.ticketId}</TableCell>
+                <TableCell align="center">{formatDate(item.purchaseDate)}</TableCell>
+                <TableCell align="center">{item.seatId}</TableCell>
                 <TableCell align="center">{item.screeningId}</TableCell>
-                <TableCell align="center">{item.price}</TableCell>
-                <TableCell align="center">{formatDate(item.screeningDate)}</TableCell>
-                <TableCell align="center">{item.movieId}</TableCell>
-                <TableCell align="center">{item.hallId}</TableCell>
-                <TableCell sx={{display:"flex", justifyContent:"center"}} >
+                <TableCell align="center">{item.userId}</TableCell>
+                <TableCell sx={{ display: "flex", justifyContent: "center" }}>
                   <Stack direction="row" spacing={1}>
-                    <IconButton onClick={() => handleEdit(item.screeningId)}>
+                    <IconButton onClick={() => handleEdit(item.ticketId)}>
                       <EditIcon />
                     </IconButton>
-                    <IconButton onClick={() => handleDelete(item.screeningId)}>
+                    <IconButton onClick={() => handleDelete(item.ticketId)}>
                       <DeleteOutlineIcon />
                     </IconButton>
                   </Stack>
@@ -213,74 +205,58 @@ const Screenings = () => {
       </TableContainer>
       <Modal open={show} onClose={handleClose}>
         <Box
-          sx={{
-            position: "absolute",
-            width: 400,
-            bgcolor: "background.paper",
-            border: "2px solid #B00020",
-            borderRadius: "8px",
-            boxShadow: 24,
-            p: 4,
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-          }}
+         sx={styles.modalWrapper}
         >
-           <IconButton
+          <IconButton
             aria-label="close"
             onClick={handleClose}
-            sx={{
-              position: "absolute",
-              right: 8,
-              top: 8,
-            }}
+            sx={styles.closeIcon}
           >
             <CloseIcon />
           </IconButton>
           <Container>
-            <Box sx={{ textAlign: "center", marginBottom: "15px" }}>
+            <Box sx={styles.modalTitle}>
               <Typography variant="h6">
-                {isEditing ? "Edit Screening" : "Add Screening"}
+                {isEditing ? "Edit Ticket" : "Add Ticket"}
               </Typography>
             </Box>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
-                  type="number"
-                  label="Enter Price"
-                  variant="outlined"
-                  value={price}
-                  onChange={(e) => setPrice(e.target.value)}
-                  fullWidth
-                  inputProps={{ min: 0 }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
                   type="datetime-local"
                   variant="outlined"
-                  value={screeningDate}
-                  onChange={(e) => setScreeningDate(e.target.value)}
+                  value={purchaseDate}
+                  onChange={(e) => setPurchaseDate(e.target.value)}
                   fullWidth
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   type="text"
-                  label="Enter Movie ID"
+                  label="Enter Seat ID"
                   variant="outlined"
-                  value={movieId}
-                  onChange={(e) => setMovieId(e.target.value)}
+                  value={seatId}
+                  onChange={(e) => setSeatId(e.target.value)}
                   fullWidth
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   type="text"
-                  label="Enter Hall ID"
+                  label="Enter Screening ID"
                   variant="outlined"
-                  value={hallId}
-                  onChange={(e) => setHallId(e.target.value)}
+                  value={screeningId}
+                  onChange={(e) => setScreeningId(e.target.value)}
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  type="text"
+                  label="Enter User ID"
+                  variant="outlined"
+                  value={userId}
+                  onChange={(e) => setUserId(e.target.value)}
                   fullWidth
                 />
               </Grid>
@@ -288,17 +264,9 @@ const Screenings = () => {
             <Button
               variant="contained"
               onClick={handleUpdateOrSave}
-              sx={{
-                marginTop: "15px",
-                width: "100%",
-                backgroundColor: "#B00020",
-                color: "white",
-                "&:hover": {
-                  backgroundColor: "#7f0019",
-                },
-              }}
+              sx={styles.editOrAddModalButton}
             >
-              {isEditing ? "Save Changes" : "Add Screening"}
+              {isEditing ? "Save Changes" : "Add Ticket"}
             </Button>
           </Container>
         </Box>
@@ -307,4 +275,4 @@ const Screenings = () => {
   );
 };
 
-export default Screenings;
+export default TicketsTable;

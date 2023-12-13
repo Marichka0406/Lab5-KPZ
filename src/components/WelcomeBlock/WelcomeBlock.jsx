@@ -1,12 +1,10 @@
-import backgroundImage from "../assets/welcome.jpg";
-import "../styles/styles.scss";
 import { Box, Typography } from "@mui/material";
+import { styles } from "./WelcomeBlock.styles.js";
 
 const WelcomeBlock = () => {
   return (
     <Box
-      className="welcome-block"
-      style={{ backgroundImage: `url(${backgroundImage})` }}
+     sx= {styles.welcomeBlockWrapper}
     >
       <Typography variant="h1">Welcome!</Typography>
     </Box>

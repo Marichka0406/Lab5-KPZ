@@ -2,60 +2,69 @@ import axios from 'axios';
 
 const API_URL = 'https://localhost:7163/api/Hall';
 
+// Інтерсептор для обробки помилок
+axios.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    console.error('Error:', error);
+    return Promise.reject(error);
+  }
+);
+
+// Створення нового екземпляра Axios з базовим URL
+const axiosInstance = axios.create({
+  baseURL: API_URL,
+});
+
 export const getAllHalls = async () => {
-    try {
-        const response = await axios.get(`${API_URL}/getAllHalls`);
-        return response.data;
-    } catch (error) {
-        console.error('Error fetching halls data:', error);
-        throw error;
-    }
+  try {
+    const response = await axiosInstance.get('/getAllHalls');
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
 };
 
 export const getHallById = async (id) => {
-    try {
-        const response = await axios.get(`${API_URL}/getHall/${id}`);
-        return response.data;
-    } catch (error) {
-        console.error(`Error fetching hall with id ${id}:`, error);
-        throw error;
-    }
+  try {
+    const response = await axiosInstance.get(`/getHall/${id}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
 };
 
 export const addHall = async (hallName, seatsQuantity) => {
-    const data = {
-        "hallName": hallName,
-        "seatsQuantity": seatsQuantity
-    };
+  const data = {
+    "hallName": hallName,
+    "seatsQuantity": seatsQuantity
+  };
 
-    try {
-        await axios.post(`${API_URL}/createHall`, data);
-        return true; 
-    } catch (error) {
-        console.error('Error creating hall:', error);
-        return false; 
-    }
+  try {
+    await axiosInstance.post('/createHall', data);
+    return true; 
+  } catch (error) {
+    throw error;
+  }
 };
 
 export const editHall = async (id, hallData) => {
-    try {
-        const url = `${API_URL}/editHall/${id}`;
-        await axios.put(url, hallData);
-    } catch (error) {
-        console.error(`Error editing hall with id ${id}:`, error);
-        throw error;
-    }
+  try {
+    const url = `/editHall/${id}`;
+    await axiosInstance.put(url, hallData);
+  } catch (error) {
+    throw error;
+  }
 };
 
 export const deleteHall = async (id) => {
-    try {
-        const response = await axios.delete(`${API_URL}/deleteHall/${id}`);
-        if (response.status === 204) {
-            return true;
-        }
-        throw new Error(`Error deleting hall with id ${id}`);
-    } catch (error) {
-        console.error(`Error deleting hall with id ${id}:`, error);
-        throw error;
+  try {
+    const response = await axiosInstance.delete(`/deleteHall/${id}`);
+    if (response.status === 204) {
+      return true;
     }
+    throw new Error(`Error deleting hall with id ${id}`);
+  } catch (error) {
+    throw error;
+  }
 };

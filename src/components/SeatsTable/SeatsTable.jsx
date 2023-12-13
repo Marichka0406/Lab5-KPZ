@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -26,9 +26,10 @@ import {
   editSeat,
   deleteSeat,
   addSeat,
-} from "../services/SeatServices.js";
+} from "../../services/SeatServices.js";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { styles } from "../../styles/table.styles.js"
 
 const SeatsTable = () => {
   const [show, setShow] = useState(false);
@@ -116,7 +117,7 @@ const SeatsTable = () => {
       handleClose();
       getData();
       clear();
-      toast.success("New seat is added");
+      toast.success("New seat was added");
     } else {
       console.error("Failed to add seat");
     }
@@ -142,16 +143,7 @@ const SeatsTable = () => {
       <ToastContainer />
       <TableContainer component={Paper}>
         <Button
-          sx={{
-            marginTop: "100px",
-            marginLeft: "10px",
-            width: "150px",
-            backgroundColor: "#B00020",
-            color: "white",
-            "&:hover": {
-              backgroundColor: "#7f0019",
-            },
-          }}
+          sx={styles.addButton}
           variant="contained"
           onClick={handleAdd}
         >
@@ -190,32 +182,17 @@ const SeatsTable = () => {
       </TableContainer>
       <Modal open={show} onClose={handleClose}>
         <Box
-          sx={{
-            position: "absolute",
-            width: 400,
-            bgcolor: "background.paper",
-            border: "2px solid #B00020",
-            borderRadius: "8px",
-            boxShadow: 24,
-            p: 4,
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-          }}
+          sx={styles.modalWrapper}
         >
           <IconButton
             aria-label="close"
             onClick={handleClose}
-            sx={{
-              position: "absolute",
-              right: 8,
-              top: 8,
-            }}
+            sx={styles.closeIcon}
           >
             <CloseIcon />
           </IconButton>
           <Container>
-            <Box sx={{ textAlign: "center", marginBottom: "15px" }}>
+            <Box sx={styles.modalTitle}>
               <Typography variant="h6">
                 {isEditing ? "Edit Seat" : "Add Seat"}
               </Typography>
@@ -245,15 +222,7 @@ const SeatsTable = () => {
             <Button
               variant="contained"
               onClick={handleUpdateOrSave}
-              sx={{
-                marginTop: "15px",
-                width: "100%",
-                backgroundColor: "#B00020",
-                color: "white",
-                "&:hover": {
-                  backgroundColor: "#7f0019",
-                },
-              }}
+              sx={styles.editOrAddModalButton}
             >
               {isEditing ? "Save Changes" : "Add Seat"}
             </Button>

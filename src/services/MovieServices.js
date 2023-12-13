@@ -2,67 +2,81 @@ import axios from 'axios';
 
 const API_URL = 'https://localhost:7163/api/Movie';
 
+// Інтерсептор для обробки помилок
+axios.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    console.error('Error:', error);
+    return Promise.reject(error);
+  }
+);
+
+// Створення нового екземпляра Axios з базовим URL
+const axiosInstance = axios.create({
+  baseURL: API_URL,
+});
+
 export const getAllMovies = async () => {
-    try {
-    const response = await axios.get(`${API_URL}/getAllMovies`);
+  try {
+    const response = await axiosInstance.get('/getAllMovies');
     return response.data;
-} catch (error) {
-    console.error('Error fetching movie data:', error);
+  } catch (error) {
     throw error;
-    }
+  }
 };
 
 export const getMovieById = async (id) => {
-    try {
-        const response = await axios.get(`${API_URL}/getMovie/${id}`);
-        return response.data;
-    } catch (error) {
-        console.error(`Error fetching customer with id ${id}:`, error);
-        throw error;
-    }
-}
+  try {
+    const response = await axiosInstance.get(`/getMovie/${id}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
 
-
-export const  editMovie = async (id, movieData) => {
-    try {
-        const url = `${API_URL}/editMovie/${id}`;
-        await axios.put(url, movieData);
-    } catch (error) {
-        console.error(`Error editing movie with id ${id}:`, error);
-        throw error;
-    }
+export const editMovie = async (id, movieData) => {
+  try {
+    await axiosInstance.put(`/editMovie/${id}`, movieData);
+  } catch (error) {
+    throw error;
+  }
 };
 
 export const deleteMovie = async (id) => {
-    try {
-        const response = await axios.delete(`${API_URL}/deleteMovie/${id}`);
-        if (response.status === 204) {
-        return true;
+  try {
+    const response = await axiosInstance.delete(`/deleteMovie/${id}`);
+    if (response.status === 204) {
+      return true;
     }
-        throw new Error(`Error deleting movie with id ${id}`);
-    } catch (error) {
-        console.error(`Error deleting movie with id ${id}:`, error);
-        throw error;
-    }
+    throw new Error(`Error deleting movie with id ${id}`);
+  } catch (error) {
+    throw error;
+  }
 };
 
+export const addMovie = async (
+  title,
+  description,
+  duration,
+  actors,
+  genres,
+  directors,
+  movieLanguage
+) => {
+  const data = {
+    title,
+    description,
+    duration,
+    actors,
+    genres,
+    directors,
+    movieLanguage,
+  };
 
-export const addMovie = async (title, description, duration, actors, genres, directors, movieLanguage) => {
-    const data = {
-        "title": title,
-        "description": description,
-        "duration": duration,
-        "actors": actors,
-        "genres": genres,
-        "directors": directors,
-        "movieLanguage": movieLanguage
-    };
-
-    try {
-        await axios.post(`${API_URL}/createMovie`, data);
-        return true; 
-    } catch (error) {
-        console.log(error);
-        return false; 
-    }
+  try {
+    await axiosInstance.post('/createMovie', data);
+    return true;
+  } catch (error) {
+    return false;
+  }
 };

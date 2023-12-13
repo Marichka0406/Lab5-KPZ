@@ -26,10 +26,11 @@ import {
   editHall,
   deleteHall,
   addHall,
-} from "../services/HallServices.js";
+} from "../../services/HallServices.js";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { styles } from "../../styles/table.styles.js"
 
 const HallsTable = () => {
   const [show, setShow] = useState(false);
@@ -77,7 +78,6 @@ const HallsTable = () => {
       hallId: hallId,
       hallName: hallName,
       seatsQuantity: seatsQuantity,
-      // Додайте решту полів для залу тут
     };
   
     editHall(hallId, hallData)
@@ -116,14 +116,13 @@ const HallsTable = () => {
     const added = await addHall(
       hallName,
       seatsQuantity,
-      // Додайте решту полів для залу тут
     );
   
     if (added) {
       handleClose();
       getData();
       clear();
-      toast.success("New hall is added");
+      toast.success("New hall was added");
     } else {
       console.error("Failed to add hall");
     }
@@ -150,16 +149,7 @@ const HallsTable = () => {
       <ToastContainer />
       <TableContainer component={Paper}>
         <Button
-          sx={{
-            marginTop: "100px",
-            marginLeft: "10px",
-            width: "150px",
-            backgroundColor: "#B00020",
-            color: "white",
-            "&:hover": {
-              backgroundColor: "#7f0019",
-            },
-          }}
+          sx={styles.addButton}
           variant="contained"
           onClick={handleAdd}
         >
@@ -198,32 +188,17 @@ const HallsTable = () => {
       </TableContainer>
       <Modal open={show} onClose={handleClose}>
         <Box
-          sx={{
-            position: "absolute",
-            width: 400,
-            bgcolor: "background.paper",
-            border: "2px solid #B00020",
-            borderRadius: "8px",
-            boxShadow: 24,
-            p: 4,
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-          }}
+          sx={styles.modalWrapper}
         >
           <IconButton
             aria-label="close"
             onClick={handleClose}
-            sx={{
-              position: "absolute",
-              right: 8,
-              top: 8,
-            }}
+            sx={styles.closeIcon}
           >
             <CloseIcon />
           </IconButton>
           <Container>
-            <Box sx={{ textAlign: "center", marginBottom: "15px" }}>
+            <Box sx={styles.modalTitle}>
               <Typography variant="h6">
                 {isEditing ? "Edit Hall" : "Add Hall"}
               </Typography>
@@ -254,15 +229,7 @@ const HallsTable = () => {
             <Button
               variant="contained"
               onClick={handleUpdateOrSave}
-              sx={{
-                marginTop: "15px",
-                width: "100%",
-                backgroundColor: "#B00020",
-                color: "white",
-                "&:hover": {
-                  backgroundColor: "#7f0019",
-                },
-              }}
+              sx={styles.editOrAddModalButton}
             >
               {isEditing ? "Save Changes" : "Add Hall"}
             </Button>
